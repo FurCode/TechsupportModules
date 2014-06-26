@@ -9,3 +9,4 @@ def gduran144(inp, conn=None, chan=None, action=None):
                 conn.cmd("KICK " + chan + " GDuran144 Do the Truffle Shuffle!");
         else:
                 return "He got lucky this time...";
+#Stuff
