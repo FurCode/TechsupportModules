@@ -4,3 +4,4 @@ from util import hook
 def echo(inp):
         if inp == "debug":
                 return "Welcome back /User/!"
+#test
