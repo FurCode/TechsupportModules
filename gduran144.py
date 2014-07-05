@@ -4,9 +4,9 @@ import random
 @hook.command
 def gduran144(inp, conn=None, chan=None, action=None, nick=None):
         value = random.randint(0, 6)
-        valuebackfire =  random.randint(0,10)
+        valuebackfire =  random.randint(0,60)
         if inp == "gerald-catz":
-                return "Video: http://goo.gl/l8JNVN";
+                return "Reel: http://vimeo.com/24735385";
         else:
                 if value == 2:
                         action("*BANG*")
