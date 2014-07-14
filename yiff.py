@@ -27,7 +27,7 @@ def reddit_url(match):
 
 
 @hook.command(autohelp=False)
-def reddit(inp):
+def yiff(inp):
 	inp = "yiff " + inp
     """yiff [n] -- Gets random art from /r/yiff , or gets the [n]th post in the subreddit."""
     id_num = None
