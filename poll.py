@@ -1,5 +1,6 @@
 from util import hook
 import os
+import pickle
 
 @hook.command
 def poll(inp, conn=None, chan=None, action=None, nick=None):
@@ -8,9 +9,28 @@ def poll(inp, conn=None, chan=None, action=None, nick=None):
 		return "This does nothing.";
 	if inp == "close":
 		os.remove("plock.txt")
-		return "Results from poll: ";
+		tally = readtally();
+		results = retreive();
+		num = 0;
+		printer = ""
+		for x in results:
+                        num = num + 1
+                        item = x + " - " + str(tally.get(num)) + " |"
+                        printer = printer + " " + item;
+		os.remove("tally.pkl")
+		os.remove("poll.txt")
+		return "Results from poll: " + printer;
 	if inp.isdigit():
-		return "Voted for:" + inp;
+		numtovote = int(inp)
+		tally = readtally();
+		print tally;
+		try:
+			count = tally.get(int(inp));
+			tally[int(inp)] = count + 1
+			storetally(tally);
+			notice("Voted for: " + inp, conn, chan, nick);
+		except TypeError:
+			notice("That is not valid.", conn, chan, nick);
 	if inp == "list":
 		results = retreive();
 		prettylist = ', '.join(results)
@@ -34,6 +54,13 @@ def poll(inp, conn=None, chan=None, action=None, nick=None):
 			return "There is a poll currently running, close it with @poll close first."
                 arguments = args.split(";")
 		store(inp);
+		num = 0
+		tally = {};
+		for x in arguments:
+			num = num + 1
+			tally[num] = 0;
+		print tally
+		storetally(tally);
 		return arguments;
 def store(data):
 	try:
@@ -64,3 +91,20 @@ def list():
 
 def announce(text, conn, chan, action=None, nick=None):
 	conn.cmd("PRIVMSG " + chan + " " + str(text));
+
+def notice(text, conn, chan, nick, action=None):
+	conn.cmd("NOTICE " + nick + " " + str(text));
+
+def storetally(tallydata):
+	try:
+                # This tries to open an existing file but creates a new file if necessary.
+                with open('tally.pkl', 'wb') as output:
+			pickle.dump(tallydata, output, pickle.HIGHEST_PROTOCOL)
+        except IOError:
+                pass
+
+def readtally():
+        # This tries to open an existing file but creates a new file if necessary.
+        with open('tally.pkl', 'rb') as input:
+                tallydata = pickle.load(input)
+		return tallydata;
