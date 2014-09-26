@@ -16,14 +16,12 @@ def reddit_url(match):
     thread = http.get_html(match.group(0))
 
     title = thread.xpath('//title/text()')[0]
-    upvotes = thread.xpath("//span[@class='upvotes']/span[@class='number']/text()")[0]
-    downvotes = thread.xpath("//span[@class='downvotes']/span[@class='number']/text()")[0]
     author = thread.xpath("//div[@id='siteTable']//a[contains(@class,'author')]/text()")[0]
     timeago = thread.xpath("//div[@id='siteTable']//p[@class='tagline']/time/text()")[0]
     comments = thread.xpath("//div[@id='siteTable']//a[@class='comments']/text()")[0]
 
-    return u'\x02{}\x02 - posted by \x02{}\x02 {} ago - {} upvotes, {} downvotes - {}'.format(
-        title, author, timeago, upvotes, downvotes, comments)
+    return u'\x02{}\x02 - posted by \x02{}\x02 {} ago - {}'.format(
+        title, author, timeago, comments)
 
 
 @hook.command(autohelp=False)
@@ -76,5 +74,5 @@ def yiff(inp):
         item["warning"] = ""
 
     return u"\x02{title} : {subreddit}\x02 - posted by \x02{author}\x02" \
-           " {timesince} ago - {ups} upvotes, {downs} downvotes -" \
+           " {timesince} ago -" \
            " {link}{warning}".format(**item)
