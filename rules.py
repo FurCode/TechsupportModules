@@ -1,9 +1,12 @@
-from util import hook
+# RoboCop 2's rules.py - A rules command designed specifically for #techsupport on Snoonet (IRC)
+
+from cloudbot import hook
 
 @hook.command
-def rules(inp, conn=None, chan=None):
-	if " " in inp:
-		command,user = inp.split(" ")
+def rules(text, conn=None, chan=None):
+	"""[spam|nick|nocoop|abuse|none] <user> - rules command for #techsupport."""
+	if " " in text:
+		command,user = text.split(" ")
 		if command == "spam":
 			return user + ": Your issue was too long. Go to http://pastebin.com and link your issue from there.";
 		if command == "nick":
@@ -13,7 +16,11 @@ def rules(inp, conn=None, chan=None):
 		if command == "abuse":
 			return user + ": Abusing the bot might cause you to be kicked from the channel, please refrain from it.";
 	else:
-		if inp == "debug":
+		if text == "debug":
 			conn.cmd("PRIVMSG " + chan + " This is a debug message. Thank you for listening.");
 		else:
-			return inp + ": Welcome to #techsupport! | Do not ask for help or specific skills, just state your issue. | For verbose descriptions, use a pastebin or a link to your /r/techsupport thread. | Generic nicks must be changed by typing /nick <nickname>. | Please be patient and don't spam.";
+			bienvenue = "Welcome to #techsupport! | Do not ask for help or specific skills, just state your issue. | For verbose descriptions, use a pastebin or a link to your /r/techsupport thread. | Generic nicks must be changed by typing /nick <nickname>. | Please be patient and don't spam.";
+			if text == "":
+				return bienvenue;
+			else:
+				return text + ": " + bienvenue;

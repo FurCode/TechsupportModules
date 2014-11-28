@@ -1,25 +1,32 @@
-from util import hook
+# RoboCop 2's isos.py, adapted from the Original RoboCop module for Python 2.7.x
+
+from cloudbot import hook
 
 @hook.command
-def isos(inp):
-	"""isos <product> <version> [edition] <bits> [torrent] -- It will grab the correct ISO link for a download."""        
+def isos(text):
+	"""- <product> <version> [edition] <bits> [torrent] -- It will grab the correct ISO link for a download."""        
+	inp = text;
 
 	dict = {'windows 7 pro 64': 'Windows 7 Pro 64-bit: http://msft.digitalrivercontent.net/win/X17-24281.iso'};
-	dict['windows 7 home 64'] = "Windows 7 Home Premium 64-bit: http://msft.digitalrivercontent.net/win/X17-24209.iso";
+	dict['windows 7 home 64'] = "Windows 7 Home Premium 64-bit: http://msft.digitalrivercontent.net/win/X17-58997.iso";
 	dict['windows 7 pro 32'] = "Windows 7 Pro 32-bit: http://msft.digitalrivercontent.net/win/X17-24280.iso";
 	dict['windows 7 home 32'] = "Windows 7 Home Premium 32-bit: http://msft.digitalrivercontent.net/win/X17-24208.iso";
 	dict['windows 7 ultimate 64'] = "Windows 7 Ultimate 64-bit: http://msft.digitalrivercontent.net/win/X17-24395.iso";
 	dict['windows 7 ultimate 32'] = "Windows 7 Ultimate 32-bit: http://msft.digitalrivercontent.net/win/X17-24394.iso";
-	dict['windows 8 pro 64'] = "Windows 8 Pro 64-bit: http://repo.comprepair.tk/Windows8_Pro/Windows8_Pro_ESD.iso | MD5: e4716c7086db4431a6fb1a8716df3d9f";
+	dict['windows 8 pro 64'] = "Windows 8 Pro 64-bit: http://repo.comprepair.tk/Windows8_Pro/Windows8_Pro_ESD.iso | MD5: 72c43a26c2e28c4e801f09ea9cd4b592";
 	dict['windows 8 pro 32'] = "Windows 8 Pro 32-bit: http://repo.comprepair.tk/Windows8_Pro/Windows8_Pro_ESD_x86.iso | MD5: 255eb2cfaca6cc398361033365f1eb28";
 	dict['windows 8.1 pro 64'] = "Windows 8.1 Pro 64-bit: http://repo.comprepair.tk/Windows8.1_Pro/Windows_81_ESD_install_x64.iso | MD5: 5119bf941fdb96cbe839e9599186eda3";
 	dict['windows 8.1 pro 32'] = "We do not have an ISO in the repository for that. Try using the official Microsoft downloader at http://goo.gl/qtfqo if you got a retail key.";
 	dict['windows vista home 32'] = "Windows Vista Home Premium 32-bit: http://repo.comprepair.tk/WindowsVista_HomePremium/LRMCFRE_EN_DVD.iso | MD5: 1008f323d5170c8e614e52ccb85c0491";
-	dict['windows vista home 64'] = "We do not have an ISO in the repository for that.";	
+	dict['windows vista home 64'] = "Windows Vista (All Editions) 64-bit: http://repo.comprepair.tk/WindowsVista_HomePremium/LRMCFRE_EN_DVD_64.ISO";	
 	dict['windows xp pro 32'] = "Windows XP Professional 32-bit: http://repo.comprepair.tk/WindowsXP_SP2_Professional/VX2POEM_EN.iso | MD5: 2d7f4e6e334e9a84c45231f5a40aa56f";
-	dict['windows xp pro 64'] = "Windows XP Professional 64-bit (Uploaded by blumoon): http://repo.comprepair.tk/WindowsXP_SP2_Professional/CRMPXOEM_EN.ISO | SHA-1: da414d53d2ed40a7e6376d981203c49cc949ad24";
+	dict['windows xp pro 64'] = "Windows XP Professional 64-bit (Uploaded by blumoon): http://repo.comprepair.tk/WindowsXP_SP2_Professional/CRMPXOEM_EN.ISO | SHA1: da414d53d2ed40a7e6376d981203c49cc949ad24";
 	dict['windows torrent'] = "Are you out of your mind? We don't recommend you use a Windows torrent under most circumstances.";
-	
+	dict['windows 8 core 64'] = "Windows 8 Core 64-bit (by blumoon): http://repo.comprepair.tk/Windows8_Core/en_windows_8_x64_dvd_915440.iso | SHA1: 1ce53ad5f60419cf04a715cf3233f247e48beec4";	
+	dict['windows 10 preview 64'] = "Windows 10 Technical Preview 64-bit: http://repo.comprepair.tk/Windows10/WindowsTechnicalPreview-x64-EN-US.iso";
+	dict['windows 10 preview 32'] = "Windows 10 Technical Preview 32-bit: http://repo.comprepair.tk/Windows10/WindowsTechnicalPreview-x86-EN-US.iso";
+	dict['windows nt4 pro 32'] = "Windows NT 4 Workstation - 32-bit: http://repo.comprepair.tk/WindowsNT4_Workstation/NTWKS40A.iso";
+
 	items_windows = dict.keys()
 	
 	dict['ubuntu 14.04 64'] = "Ubuntu Desktop 14.04 (LTS) 64-bit: http://www.ubuntu.com/download/desktop/thank-you?country=US&version=14.04&architecture=amd64";
@@ -81,7 +88,7 @@ def isos(inp):
 	inp = inp.lower()
 
 	if inp == "print":
-		print str(items)
+		print(str(items));
 		value = ', '.join(items)
 		
 	else:	
