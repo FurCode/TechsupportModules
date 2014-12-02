@@ -73,5 +73,5 @@ def reddit(inp):
         item["warning"] = ""
 
     return u"\x02{title} : {subreddit}\x02 - posted by \x02{author}\x02" \
-           " {timesince} ago - {ups} upvotes, {downs} downvotes -" \
+           " {timesince} ago -" \
            " {link}{warning}".format(**item)
