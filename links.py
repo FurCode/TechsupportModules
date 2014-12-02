@@ -17,7 +17,7 @@ def linkmatcher(match):
 	blacklist = ["http://youtube.com", "http://youtu.be", "https://youtube.com", "https://www.youtube.com", "http://www.youtube.com"];
 	url = match.group(1);
 	
-	if any(ext in url for ext in blacklist):
+	if any(domain in url for domain in blacklist):
 		return
 	else:
 		pass
