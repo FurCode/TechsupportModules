@@ -1,25 +1,27 @@
+# RoboCop 2's ModeratedSubreddits.py - Brings up modded subreddits by an user on reddit.
+
 from bs4 import BeautifulSoup
-import urllib, urllib2
+import urllib.error, urllib.request
 import lxml.html
-from util import hook
+from cloudbot import hook
 
 @hook.command
-def mods(inp):
+def mods(text):
 	"""Usage: @mods [user]"""
-	address = "http://www.reddit.com/user/" + inp
-	data = urllib2.Request(address, None, {'User-Agent':'Mosilla/5.0 (Macintosh; Intel Mac OS X 10_7_4) AppleWebKit/536.11 (KHTML, like Gecko) Chrome/20.0.1132.57 Safari/536.11'})
+	address = "http://www.reddit.com/user/" + text
+	data = urllib.request.Request(address, None, {'User-Agent':'Mosilla/5.0 (Macintosh; Intel Mac OS X 10_7_4) AppleWebKit/536.11 (KHTML, like Gecko) Chrome/20.0.1132.57 Safari/536.11'})
 	try:
-		urlfile = urllib2.urlopen(data)
-	except urllib2.HTTPError:
+		urlfile = urllib.request.urlopen(data)
+	except urllib.error.HTTPError:
 		return "Huh, that user seems to not exist."
 	page = urlfile.read()
 	soup = BeautifulSoup(page)
 	
 	#Title Message for the console
-	print soup.title.string
+	print(soup.title.string);
 
 	subreddits = soup.findAll("ul", { "id" : "side-mod-list" })
-	user = inp
+	user = text
 	
 	#Return the list of subreddits
 	try:

@@ -1,13 +1,15 @@
-from util import hook
+# RoboCop 2's poll.py - Allows running a single poll session on any channel.
+
+from cloudbot import hook
 import os
 import pickle
 
 @hook.command
-def poll(inp, conn=None, chan=None, action=None, nick=None):
-	args = inp;
-	if inp == "help":
+def poll(text, conn=None, chan=None, action=None, nick=None):
+	args = text;
+	if text == "help":
 		return "This does nothing.";
-	if inp == "close":
+	if text == "close":
 		os.remove("plock.txt")
 		tally = readtally();
 		results = retreive();
@@ -20,21 +22,21 @@ def poll(inp, conn=None, chan=None, action=None, nick=None):
 		os.remove("tally.pkl")
 		os.remove("poll.txt")
 		return "Results from poll: " + printer;
-	if inp.isdigit():
-		numtovote = int(inp)
+	if text.isdigit():
+		numtovote = int(text)
 		tally = readtally();
-		print tally;
+		print(tally);
 		try:
-			count = tally.get(int(inp));
-			tally[int(inp)] = count + 1
+			count = tally.get(int(text));
+			tally[int(text)] = count + 1
 			storetally(tally);
-			notice("Voted for: " + inp, conn, chan, nick);
+			notice("Voted for: " + text, conn, chan, nick);
 		except TypeError:
 			notice("That is not valid.", conn, chan, nick);
-	if inp == "list":
+	if text == "list":
 		results = retreive();
 		prettylist = ', '.join(results)
-		print list();
+		print(list());
 		message = "Currently up for votes:";
 		count = len(results)
 		announce(message, conn, chan);
@@ -49,17 +51,17 @@ def poll(inp, conn=None, chan=None, action=None, nick=None):
 		announce(str(count) + " in total.", conn, chan);
 	if ";" in args:
 		if not os.path.exists("plock.txt"):
-    			file("plock.txt", 'w').close()
+    			open("plock.txt", 'w').close()
 		else:
 			return "There is a poll currently running, close it with @poll close first."
-                arguments = args.split(";")
-		store(inp);
+		arguments = args.split(";")
+		store(text);
 		num = 0
 		tally = {};
 		for x in arguments:
 			num = num + 1
 			tally[num] = 0;
-		print tally
+		print(tally)
 		storetally(tally);
 		return arguments;
 def store(data):
@@ -76,14 +78,14 @@ def store(data):
 def retreive():
 	try:
 		f = open("poll.txt", "r")
-                try:
-                        # Read the entire contents of a file at once.
-                        args = f.read()
-                finally:
-                        f.close()
-        except IOError:
-                string = "Could not read file."
-        arguments = args.split(";")
+		try:
+			# Read the entire contents of a file at once.
+			args = f.read()
+		finally:
+			f.close()
+	except IOError:
+		string = "Could not read file."
+	arguments = args.split(";")
 	return arguments;
 
 def list():
@@ -97,14 +99,14 @@ def notice(text, conn, chan, nick, action=None):
 
 def storetally(tallydata):
 	try:
-                # This tries to open an existing file but creates a new file if necessary.
-                with open('tally.pkl', 'wb') as output:
+		# This tries to open an existing file but creates a new file if necessary.
+		with open('tally.pkl', 'wb') as output:
 			pickle.dump(tallydata, output, pickle.HIGHEST_PROTOCOL)
-        except IOError:
-                pass
+	except IOError:
+		pass
 
 def readtally():
-        # This tries to open an existing file but creates a new file if necessary.
-        with open('tally.pkl', 'rb') as input:
-                tallydata = pickle.load(input)
-		return tallydata;
+	# This tries to open an existing file but creates a new file if necessary.
+	with open('tally.pkl', 'rb') as textut:
+		tallydata = pickle.load(textut)
+	return tallydata;
