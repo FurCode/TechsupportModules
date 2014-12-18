@@ -1,5 +1,6 @@
 # RoboCop Classic's gsearch.py - A backport of gsearch.py from RoboCop 2 for the older CloudBot engine.
 # This Module requires a Google Custom Search API key and a Custom Search Engine ID in order to function.
+# Contact foxlet at inquries@comprepair.tk for support with this module.
 
 import random
 
