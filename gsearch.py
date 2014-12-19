@@ -26,6 +26,9 @@ def api_get(query):
 def gse(inp):
     """gsearch <query> -- Returns first google search result for <query>."""
 
+    if inp == "!!info":
+        return "FurCode gsearch.py for RoboCop Classic.";
+
     eval = urllib.quote(inp)
     parsed = api_get(eval)
 
@@ -42,3 +45,8 @@ def gse(inp):
         content = text.truncate_str(content, 150)
 
     return u'{} -- \x02{}\x02: "{}"'.format(result['link'], title, content)
+
+@hook.command('g')
+def oldg_msg(inp):
+    return "The @g command has been replaced by @gse.";
+
