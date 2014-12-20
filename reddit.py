@@ -18,7 +18,14 @@ def reddit_url(match):
     title = thread.xpath('//title/text()')[0]
     author = thread.xpath("//div[@id='siteTable']//a[contains(@class,'author')]/text()")[0]
     timeago = thread.xpath("//div[@id='siteTable']//p[@class='tagline']/time/text()")[0]
-    comments = thread.xpath("//div[@id='siteTable']//a[@class='comments may-blank']/text()")[0]
+    try:
+        comments = thread.xpath("//div[@id='siteTable']//a[@class='comments may-blank']/text()")[0]
+    except IndexError:
+        comments = thread.xpath("//div[@id='siteTable']//a[@class='comments empty may-blank']/text()")[0]
+        if comments == "comment":
+            comments = "No comments"
+        else:
+            pass
     pointsnum = thread.xpath("//div[@class='score']//span[@class='number']/text()")[0]
     pointsword = thread.xpath("//div[@class='score']//span[@class='word']/text()")[0]
 
